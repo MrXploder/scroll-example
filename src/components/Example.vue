@@ -20,28 +20,24 @@
         style="background-color: transparent"
       >
         <div style="position: relative" class="fill-space">
-          <FullSizeCard :opacity="opacity" style="position: absolute; z-index: 10" />
-          <ShrinkSizeCard style="position: absolute; z-index: 1" />
+          <slot name="big-card" />
+          <slot name="small-card" />
         </div>
       </v-app-bar>
     </v-app-bar>
     <!-- Para que funcione el contenido debe ser mas alto que el contenedor, para que haya "overflow" y funcione los scroll event -->
-    <v-sheet class="overflow-y-auto" max-height="600" :id="scrollTargetId">
-      <v-container style="height: 10000px"></v-container>
+    <v-sheet class="overflow-y-auto" :max-height="maxHeight" :id="scrollTargetId">
+      <slot></slot>
     </v-sheet>
   </v-card>
 </template>
 
 <script>
-import FullSizeCard from '@/components/FullSizeCard.vue'
-import ShrinkSizeCard from '@/components/ShrinkSizeCard.vue'
-
 export default {
   name: 'Example',
 
-  components: {
-    FullSizeCard,
-    ShrinkSizeCard
+  props: {
+    maxHeight: { type: Number, default: 600 }
   },
 
   data: () => ({
